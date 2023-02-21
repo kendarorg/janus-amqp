@@ -1,0 +1,33 @@
+{
+  "name": "${broker.name}",
+  "modelVersion": "2.0",
+  "defaultVirtualHost" : "default",
+  "authenticationproviders": [
+    {
+      "name": "password",
+      "type": "Plain",
+      "secureOnlyMechanisms": [],
+      "users": [{"name": "guest", "password": "password", "type": "managed"}]
+    }
+  ],
+  "ports" : [  {
+    "name" : "AMQP",
+    "port" : "${qpid.amqp_port}",
+    "authenticationProvider" : "password",
+    "protocols": ["AMQP_0_10", "AMQP_0_8", "AMQP_0_9", "AMQP_0_9_1" ]
+  }, {
+    "name" : "HTTP",
+    "port" : "${qpid.http_port}",
+    "authenticationProvider" : "password",
+    "protocols" : [ "HTTP" ]
+  }],
+  "virtualhostnodes" : [ {
+    "name" : "default",
+    "type" : "JSON",
+    "virtualHostInitialConfiguration" : "{ \"type\" : \"Memory\" }"
+  } ],
+  "plugins" : [ {
+    "type" : "MANAGEMENT-HTTP",
+    "name" : "httpManagement"
+  }]
+}
